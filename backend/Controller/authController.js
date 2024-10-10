@@ -1,12 +1,12 @@
-import User from "../models/UserSchema.js";
-import Doctor from "../models/DoctorSchema.js";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import User from '../models/UserSchema.js';
+import Doctor from '../models/DoctorSchema.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 // Create JWT token
 const genreateToken = (user) => {
   return jwt.sign({ id: user._id, type: user.role }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: '1d',
   });
 };
 
@@ -16,13 +16,13 @@ export const signup = async (req, res) => {
     const { name, email, password, role, photo, gender } = req.body;
 
     let user = null;
-    if (role === "patient") user = await User.findOne({ email });
-    else if (role === "doctor") user = await Doctor.findOne({ email });
+    if (role === 'patient') user = await User.findOne({ email });
+    else if (role === 'doctor') user = await Doctor.findOne({ email });
 
     // Check user is exist
     if (user)
       return res.status(400).json({
-        message: "User already exist",
+        message: 'User already exist',
       });
 
     //   hash password
@@ -30,7 +30,7 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    if (role === "patient")
+    if (role === 'patient')
       user = new User({
         name,
         email,
@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
         role,
       });
 
-    if (role === "doctor")
+    if (role === 'doctor')
       user = new Doctor({
         name,
         email,
@@ -53,7 +53,7 @@ export const signup = async (req, res) => {
     await user.save();
     res.status(200).json({
       success: true,
-      message: "user successfully created.",
+      message: 'user successfully created.',
       data: {
         user,
       },
@@ -62,7 +62,7 @@ export const signup = async (req, res) => {
     res.status(500).json({
       status: false,
       // err: error.massage,
-      message: "Internal server error. Try again",
+      message: 'Internal server error. Try again',
     });
   }
 };
@@ -83,7 +83,7 @@ export const login = async (req, res) => {
     if (!user)
       return res.status(400).json({
         success: false,
-        message: "user not found.",
+        message: 'user not found.',
       });
     // Validate compare Password
 
@@ -94,7 +94,7 @@ export const login = async (req, res) => {
     if (!isPasswordMatch)
       return res.status(400).json({
         status: false,
-        message: "Invalid credentials.",
+        message: 'Invalid credentials.',
       });
 
     // Get JWT token
@@ -103,7 +103,7 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       status: true,
-      message: "successfully login.",
+      message: 'successfully login.',
       token,
       role,
       data: {
