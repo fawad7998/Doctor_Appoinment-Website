@@ -1,7 +1,5 @@
 import { useState } from "react";
 import doctorImg from "../../assets/images/doctor-img02.png";
-import starIcon from "./../../assets/images/star.png";
-
 import SidePanel from "./SidePanel";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
@@ -28,7 +26,6 @@ const DoctorsDetail = () => {
                 </h3>
                 <div className="flex items-center gap-[6px]">
                   <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                    <img src={starIcon} alt="star icon" /> 4.8
                   </span>
                   <span className="text-[14px] leading-5 lg:text-[16px] font-[400] text-textColor">
                     (272)
@@ -44,19 +41,17 @@ const DoctorsDetail = () => {
             <div className="mt-[50px] border-b border-solid border-[#0066ff34]">
               <button
                 onClick={() => setTab("about")}
-                className={`${
-                  tab === "about" && `border-b border-solid border-primaryColor`
-                } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+                className={`${tab === "about" && `border-b border-solid border-primaryColor`
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
               >
                 About
               </button>
 
               <button
                 onClick={() => setTab("feedback")}
-                className={`${
-                  tab === "feedback" &&
+                className={`${tab === "feedback" &&
                   `border-b border-solid border- border-primaryColor`
-                } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
               >
                 Feedback
               </button>
